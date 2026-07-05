@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haadiya Farhan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --grey:#c0c0c0;
+  --grey-dark:#808080;
+  --grey-light:#dfdfdf;
+  --black:#000000;
+  --white:#ffffff;
+  --navy:#000080;
+  --navy-light:#1084d0;
+  --teal:#008080;
+  --paint-red:#ff0000;
+  --paint-yellow:#ffff00;
+  --paint-green:#00cc00;
+  --paint-blue:#0066ff;
+  --paint-purple:#cc00cc;
+  --paint-orange:#ff8800;
+  --display:'Press Start 2P', monospace;
+  --mono:'VT323', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:var(--teal);
+  font-family:var(--mono);
+  font-size:19px;
+  color:var(--black);
+  padding-bottom:56px;
+  background-image:
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size:24px 24px;
+}
+a{color:var(--navy);}
+img{image-rendering:pixelated;}
+
+.win{
+  background:var(--grey);
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+  margin:24px auto;
+  max-width:960px;
+}
+.win-title{
+  background:linear-gradient(90deg, var(--navy), var(--navy-light));
+  color:var(--white);
+  font-family:var(--display);
+  font-size:12px;
+  padding:8px 10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  letter-spacing:0.5px;
+}
+.win-title .lbl{display:flex;align-items:center;gap:8px;}
+.win-title .box{
+  width:10px;height:9px;
+  background:var(--grey);
+  border:1px solid #000;
+  display:inline-block;
+}
+.win-buttons{display:flex;gap:4px;}
+.win-body{padding:24px;}
+
+.btn{
+  font-family:var(--mono);
+  font-size:17px;
+  background:var(--grey);
+  border:none;
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+  padding:8px 20px;
+  cursor:pointer;
+  color:var(--black);
+  text-decoration:none;
+  display:inline-block;
+}
+.btn:active{
+  box-shadow:
+    inset 1px 1px 0 #0a0a0a,
+    inset -1px -1px 0 var(--white),
+    inset 2px 2px 0 var(--grey-dark),
+    inset -2px -2px 0 var(--grey-light);
+}
+
+/* menu bar */
+.menubar{
+  position:sticky;top:0;z-index:20;
+  background:var(--grey);
+  border-bottom:2px solid var(--black);
+  display:flex;
+  padding:4px 10px;
+  gap:2px;
+  box-shadow:0 2px 0 rgba(0,0,0,0.2);
+}
+.menubar a{
+  font-family:var(--mono);
+  font-size:17px;
+  color:var(--black);
+  text-decoration:none;
+  padding:4px 12px;
+}
+.menubar a:hover{background:var(--navy);color:var(--white);}
+
+/* desktop hero */
+.desktop{
+  position:relative;
+  min-height:100vh;
+  padding:40px 5vw 60px;
+  overflow:hidden;
+}
+.desktop-icon{
+  position:absolute;
+  width:88px;
+  text-align:center;
+  color:var(--white);
+  font-family:var(--mono);
+  font-size:16px;
+  cursor:pointer;
+  text-shadow:1px 1px 0 #000;
+  user-select:none;
+}
+.desktop-icon .icon{
+  width:44px;height:38px;
+  margin:0 auto 4px;
+}
+.desktop-icon span{
+  background:transparent;
+  padding:1px 4px;
+}
+.desktop-icon:hover span{background:var(--navy);}
+
+.hero-notepad{
+  max-width:640px;
+  margin:60px auto 0;
+}
+.hero-notepad .win-body{
+  padding:32px;
+}
+h1.name{
+  font-family:var(--display);
+  font-size:clamp(22px, 4.5vw, 40px);
+  line-height:1.5;
+  color:var(--black);
+}
+.cursor-blink{
+  display:inline-block;width:14px;height:1em;background:var(--black);
+  animation:blink 1s steps(1) infinite;
+  vertical-align:middle;
+  margin-left:4px;
+}
+@keyframes blink{50%{opacity:0;}}
+.tagline{
+  font-family:var(--mono);
+  font-size:22px;
+  margin-top:18px;
+  line-height:1.5;
+}
+.hero-cta{margin-top:26px;display:flex;gap:14px;flex-wrap:wrap;}
+
+.hint{
+  text-align:center;
+  color:var(--white);
+  font-family:var(--mono);
+  font-size:16px;
+  text-shadow:1px 1px 0 #000;
+  margin-top:8px;
+}
+
+/* paint window */
+.paint-window{max-width:640px;}
+.paint-body{display:flex;gap:10px;padding:14px;}
+.paint-tools{
+  display:flex;flex-direction:column;gap:4px;
+  background:var(--grey);
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+  padding:6px;
+}
+.paint-tools button{
+  width:34px;height:30px;
+  font-size:16px;
+  background:var(--grey);
+  border:none;
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+  cursor:pointer;
+}
+.paint-tools button.active{
+  box-shadow:
+    inset 1px 1px 0 #0a0a0a,
+    inset -1px -1px 0 var(--white),
+    inset 2px 2px 0 var(--grey-dark),
+    inset -2px -2px 0 var(--grey-light);
+}
+#paintCanvas{
+  background:var(--white);
+  box-shadow:
+    inset 1px 1px 0 #0a0a0a,
+    inset -1px -1px 0 var(--white),
+    inset 2px 2px 0 var(--grey-dark),
+    inset -2px -2px 0 var(--grey-light);
+  cursor:crosshair;
+  touch-action:none;
+}
+.palette-strip{
+  display:flex;flex-wrap:wrap;gap:3px;
+  padding:8px 14px 14px;
+  background:var(--grey);
+}
+.swatch{
+  width:22px;height:22px;
+  border:1px solid #000;
+  cursor:pointer;
+}
+.status-bar{
+  border-top:2px solid var(--grey-dark);
+  background:var(--grey);
+  padding:4px 14px;
+  font-size:15px;
+  display:flex;justify-content:space-between;
+}
+
+/* sections */
+section{padding:20px 5vw 10px;}
+.section-eyebrow{
+  font-family:var(--display);
+  font-size:11px;
+  color:var(--white);
+  text-shadow:1px 1px 0 #000;
+  margin:20px auto -4px;
+  max-width:960px;
+}
+
+/* about / system properties */
+.tabs{display:flex;gap:2px;padding:10px 10px 0;background:var(--grey);}
+.tab{
+  font-family:var(--mono);font-size:16px;
+  padding:6px 16px;
+  background:var(--grey);
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+}
+.prop-table{width:100%;border-collapse:collapse;margin-top:18px;}
+.prop-table tr{border-bottom:1px dotted var(--grey-dark);}
+.prop-table td{padding:9px 6px;vertical-align:top;font-size:18px;}
+.prop-table td:first-child{width:220px;font-weight:bold;color:var(--navy);}
+.about-copy{margin-top:20px;font-size:18px;line-height:1.6;}
+.about-copy p{margin-bottom:14px;}
+
+/* skills toolbox + palette */
+.skills-grid{display:flex;gap:24px;flex-wrap:wrap;justify-content:center;}
+.skills-grid .win{flex:1;min-width:300px;margin:12px 0;}
+.tool-list{display:flex;flex-wrap:wrap;gap:8px;}
+.tool-chip{
+  font-family:var(--mono);font-size:16px;
+  padding:6px 12px;
+  background:var(--grey);
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+}
+.color-chip{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 10px;margin-bottom:6px;
+  font-size:16px;
+}
+.color-dot{width:16px;height:16px;border:1px solid #000;display:inline-block;}
+
+/* my pictures gallery */
+.pic-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(160px, 1fr));
+  gap:18px;
+}
+.pic-item{
+  display:block;
+  text-decoration:none;
+  color:var(--black);
+  background:var(--white);
+  padding:8px;
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+}
+.pic-item img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  display:block;
+  border:1px solid #000;
+}
+.pic-item span{
+  display:block;
+  font-family:var(--mono);
+  font-size:15px;
+  text-align:center;
+  margin-top:8px;
+}
+.pic-item:hover{background:var(--navy-light);}
+.pic-item:hover span{color:var(--white);}
+
+/* explorer / work */
+.explorer-head{
+  display:grid;grid-template-columns:2.2fr 1.4fr 1.4fr 1fr;
+  background:var(--navy);color:var(--white);
+  font-family:var(--display);font-size:10px;
+  padding:8px 10px;gap:8px;
+}
+.explorer-row{
+  display:grid;grid-template-columns:2.2fr 1.4fr 1.4fr 1fr;
+  padding:10px;gap:8px;
+  border-bottom:1px dotted var(--grey-dark);
+  align-items:start;
+  font-size:16px;
+}
+.explorer-row:hover{background:var(--navy-light);color:var(--white);}
+.file-name{display:flex;align-items:center;gap:8px;font-size:17px;}
+.file-desc{
+  grid-column:1/-1;
+  font-size:15px;
+  padding:0 10px 12px 34px;
+  color:var(--grey-dark);
+}
+.explorer-row:hover .file-desc{color:var(--white);}
+.explorer-row a{color:inherit;text-decoration:underline;}
+
+/* terminal / experience */
+.terminal{
+  background:#000;
+  color:#33ff33;
+  font-family:var(--mono);
+  font-size:19px;
+  padding:20px;
+  line-height:1.5;
+  max-width:960px;
+  margin:0 auto;
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--grey-light);
+}
+.terminal .prompt{color:#33ff33;}
+.terminal .line{margin-bottom:4px;}
+.terminal .desc{color:#9bffb0;margin-bottom:18px;margin-left:0;}
+
+/* contact / mail composer */
+.mail-field{display:flex;border-bottom:1px solid var(--grey-dark);padding:6px 0;font-size:17px;}
+.mail-field .lbl{width:90px;font-weight:bold;color:var(--navy);}
+.memo-input{
+  font-family:var(--mono);font-size:17px;
+  border:none;background:var(--white);
+  box-shadow:inset 1px 1px 0 var(--grey-dark);
+  padding:4px 8px;flex:1;
+}
+.memo-textarea{
+  width:100%;
+  font-family:var(--mono);font-size:17px;
+  background:var(--white);
+  border:none;
+  box-shadow:inset 1px 1px 0 var(--grey-dark);
+  padding:12px;
+  margin-top:12px;
+  resize:vertical;
+}
+.mail-body{margin-top:14px;font-size:17px;line-height:1.6;background:var(--white);padding:14px;box-shadow:inset 1px 1px 0 var(--grey-dark);min-height:100px;}
+.mail-actions{margin-top:18px;display:flex;gap:10px;}
+
+.corkboard{
+  margin-top:24px;
+  min-height:60px;
+  padding:22px;
+  background-color:#a97449;
+  background-image:
+    radial-gradient(rgba(0,0,0,0.12) 1px, transparent 1px);
+  background-size:8px 8px;
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+  display:flex;
+  flex-wrap:wrap;
+  gap:22px;
+  align-content:flex-start;
+}
+.corkboard:empty::after{
+  content:'Nothing pinned yet. Be the first.';
+  color:rgba(255,255,255,0.75);
+  font-family:var(--mono);
+  font-size:16px;
+}
+.sticky-note{
+  width:160px;
+  min-height:140px;
+  padding:18px 12px 12px;
+  font-family:var(--mono);
+  font-size:15px;
+  line-height:1.35;
+  position:relative;
+  box-shadow:3px 4px 10px rgba(0,0,0,0.4);
+  word-wrap:break-word;
+  color:#2a2a2a;
+}
+.sticky-note .pin{
+  position:absolute;
+  top:-14px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:22px;
+  color:#e63946;
+  text-shadow:1px 1px 1px rgba(0,0,0,0.5);
+}
+.sticky-note .who{
+  display:block;
+  margin-top:10px;
+  font-size:12px;
+  opacity:0.65;
+}
+
+/* taskbar */
+.taskbar{
+  position:fixed;bottom:0;left:0;right:0;
+  height:44px;
+  background:var(--grey);
+  border-top:2px solid var(--white);
+  box-shadow:0 -2px 0 var(--grey-dark);
+  display:flex;align-items:center;
+  padding:0 8px;gap:8px;
+  z-index:30;
+  font-family:var(--mono);
+}
+.start-btn{
+  display:flex;align-items:center;gap:6px;
+  font-family:var(--display);font-size:11px;
+  padding:6px 12px;
+  background:var(--grey);
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light);
+  cursor:pointer;
+  border:none;
+}
+.start-logo{
+  width:16px;height:16px;
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;
+}
+.start-logo span:nth-child(1){background:var(--paint-red);}
+.start-logo span:nth-child(2){background:var(--paint-green);}
+.start-logo span:nth-child(3){background:var(--paint-blue);}
+.start-logo span:nth-child(4){background:var(--paint-yellow);}
+.taskbar-tabs{display:flex;gap:6px;flex:1;overflow-x:auto;}
+.taskbar-tab{
+  font-size:15px;
+  padding:6px 12px;
+  background:var(--grey-light);
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white);
+  white-space:nowrap;
+  text-decoration:none;
+  color:var(--black);
+}
+.clock{
+  font-size:16px;
+  padding:6px 12px;
+  background:var(--grey-light);
+  box-shadow:inset 1px 1px 0 var(--grey-dark);
+  min-width:80px;
+  text-align:center;
+}
+
+@media (max-width:760px){
+  .desktop-icon{position:static;display:inline-block;margin:10px;}
+  .desktop{display:flex;flex-wrap:wrap;padding-top:20px;}
+  .paint-body{flex-direction:column;}
+  .paint-tools{flex-direction:row;}
+  .explorer-head{display:none;}
+  .explorer-row{grid-template-columns:1fr;}
+  .file-desc{padding-left:0;}
+  .menubar a{padding:4px 6px;font-size:14px;}
+}
+
+/* boot screen */
+.boot-screen{
+  position:fixed;inset:0;
+  background:#000;
+  color:#c0c0c0;
+  font-family:var(--mono);
+  font-size:22px;
+  z-index:9999;
+  padding:40px;
+  line-height:1.6;
+  white-space:pre-wrap;
+}
+.boot-screen.hide{
+  animation:bootFade 0.5s ease forwards;
+}
+@keyframes bootFade{
+  to{opacity:0;visibility:hidden;}
+}
+.boot-cursor{
+  display:inline-block;width:12px;height:1em;background:#c0c0c0;
+  animation:blink 0.8s steps(1) infinite;
+  vertical-align:middle;
+}
+
+/* draggable windows */
+.win-title{cursor:grab;}
+.win-title:active{cursor:grabbing;}
+.win.dragging{
+  position:relative;
+  z-index:100;
+  box-shadow:
+    inset -1px -1px 0 #0a0a0a,
+    inset 1px 1px 0 var(--white),
+    inset -2px -2px 0 var(--grey-dark),
+    inset 2px 2px 0 var(--grey-light),
+    6px 8px 18px rgba(0,0,0,0.4);
+}
+
+/* skill proof line */
+.proof-line{
+  margin-top:14px;
+  padding-top:10px;
+  border-top:1px dotted var(--grey-dark);
+  font-size:14px;
+  color:var(--navy);
+  line-height:1.5;
+}
+
+/* project modal */
+.explorer-row{cursor:pointer;}
+.file-desc{display:none;}
+.project-modal-overlay{
+  display:none;
+  position:fixed;inset:0;
+  background:rgba(0,0,0,0.5);
+  z-index:500;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+.project-modal-overlay.open{display:flex;}
+.project-modal{
+  max-width:520px;
+  width:100%;
+  margin:0;
+}
+.project-modal .win-buttons .box{cursor:pointer;}
+.modal-desc{font-size:18px;line-height:1.6;}
+.modal-meta{
+  display:flex;gap:14px;flex-wrap:wrap;
+  margin-bottom:14px;
+  font-size:15px;
+}
+.modal-meta span{
+  background:var(--grey-light);
+  padding:3px 10px;
+  box-shadow:inset 1px 1px 0 var(--grey-dark);
+}
+
+</style>
+</head>
+<body>
+
+<div class="boot-screen" id="bootScreen">
+  <div id="bootText"></div>
+</div>
+
+<div class="menubar">
+  <a href="#about">File</a>
+  <a href="#skills">Edit</a>
+  <a href="#work">View</a>
+  <a href="#experience">Options</a>
+  <a href="#contact">Help</a>
+</div>
+
+<div class="desktop" id="home">
+  <div class="desktop-icon" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" style="top:8%; left:6%;">
+    <svg class="icon" viewBox="0 0 44 38"><rect width="44" height="30" fill="#000" stroke="#fff" stroke-width="2"/><rect x="4" y="4" width="36" height="20" fill="#1084d0"/><rect x="14" y="32" width="16" height="4" fill="#c0c0c0" stroke="#000"/></svg>
+    <span>My Computer</span>
+  </div>
+  <div class="desktop-icon" onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})" style="top:22%; left:80%;">
+    <svg class="icon" viewBox="0 0 44 38"><polygon points="2,10 16,10 20,14 42,14 42,34 2,34" fill="#ffcc00" stroke="#000" stroke-width="2"/></svg>
+    <span>Toolbox</span>
+  </div>
+  <div class="desktop-icon" onclick="document.getElementById('work').scrollIntoView({behavior:'smooth'})" style="top:46%; left:5%;">
+    <svg class="icon" viewBox="0 0 44 38"><polygon points="2,10 16,10 20,14 42,14 42,34 2,34" fill="#ffcc00" stroke="#000" stroke-width="2"/></svg>
+    <span>My Work</span>
+  </div>
+  <div class="desktop-icon" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})" style="top:64%; left:82%;">
+    <svg class="icon" viewBox="0 0 44 38"><rect width="44" height="38" fill="#000"/><text x="4" y="24" fill="#33ff33" font-size="14" font-family="monospace">C:\&gt;</text></svg>
+    <span>Terminal</span>
+  </div>
+  <div class="desktop-icon" onclick="document.getElementById('feedback').scrollIntoView({behavior:'smooth'})" style="top:64%; left:8%;">
+    <svg class="icon" viewBox="0 0 44 38"><rect x="4" width="36" height="36" fill="#fff9c4" stroke="#000" stroke-width="2"/><line x1="10" y1="12" x2="34" y2="12" stroke="#999" stroke-width="1.5"/><line x1="10" y1="18" x2="34" y2="18" stroke="#999" stroke-width="1.5"/><line x1="10" y1="24" x2="26" y2="24" stroke="#999" stroke-width="1.5"/></svg>
+    <span>Leave a Memo</span>
+  </div>
+  <div class="desktop-icon" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" style="top:80%; left:8%;">
+    <svg class="icon" viewBox="0 0 44 38"><rect width="44" height="32" y="3" fill="#fff" stroke="#000" stroke-width="2"/><polygon points="2,4 22,20 42,4" fill="none" stroke="#000" stroke-width="2"/></svg>
+    <span>Send Mail</span>
+  </div>
+
+  <div class="win hero-notepad">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> HAADIYA.TXT</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="win-body">
+      <h1 class="name">HAADIYA FARHAN<span class="cursor-blink"></span></h1>
+      <p class="tagline">FinTech student building data-driven software, computer-vision experiments, and pixel-perfect visuals.</p>
+      <div class="hero-cta">
+        <a class="btn" href="#work">Open My Work</a>
+        <a class="btn" href="resume.pdf" download>Download Resume</a>
+        <a class="btn" href="mailto:haadiyafarhan8@gmail.com">Send Mail</a>
+      </div>
+    </div>
+    <div class="status-bar"><span>Ready</span><span>Karachi, Pakistan</span></div>
+  </div>
+  <div class="hint">Click an icon to open it</div>
+</div>
+
+<div class="section-eyebrow" id="about-label">SYSTEM PROPERTIES</div>
+<section id="about">
+  <div class="win">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> SYSTEM PROPERTIES</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="tabs">
+      <div class="tab" style="box-shadow:inset 1px 1px 0 #0a0a0a, inset -1px -1px 0 #fff;">General</div>
+      <div class="tab">Design</div>
+      <div class="tab">Network</div>
+    </div>
+    <div class="win-body">
+      <table class="prop-table">
+        <tr><td>Computer name</td><td>HAADIYA FARHAN</td></tr>
+        <tr><td>Registered to</td><td>FAST National University of Computer and Emerging Sciences, Karachi</td></tr>
+        <tr><td>System type</td><td>BS Financial Technology, Year 2</td></tr>
+        <tr><td>Processor</td><td>Python and SQL, running alongside a design co processor</td></tr>
+        <tr><td>Installed programs</td><td>Illustrator, Photoshop, Canva</td></tr>
+        <tr><td>Currently running</td><td>WFM Health Check Internship at Alkaram Textile Mills</td></tr>
+        <tr><td>Location</td><td>Karachi, Pakistan</td></tr>
+      </table>
+      <div class="about-copy">
+        <p>Two years into a BS in Financial Technology at FAST NUCES, working where rigorous data work meets visual design.</p>
+        <p>Python and SQL by day, MediaPipe and Illustrator by night — 5+ solo projects spanning both sides.</p>
+        <p>Currently leading design across 3 university societies and auditing 25+ WFM dashboards at Alkaram Textile Mills.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-eyebrow">PAINT.EXE</div>
+<section>
+  <div class="win paint-window">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> PAINT.EXE</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="paint-body">
+      <div class="paint-tools">
+        <button id="toolPencil" class="active" title="Pencil">P</button>
+        <button id="toolEraser" title="Eraser">E</button>
+        <button id="toolClear" title="Clear">X</button>
+      </div>
+      <canvas id="paintCanvas" width="480" height="260"></canvas>
+    </div>
+    <div class="palette-strip" id="palette"></div>
+    <div class="status-bar"><span>Draw something. It stays between us.</span><span id="paintStatus">Pencil, Black</span></div>
+  </div>
+</section>
+
+<div class="section-eyebrow" id="skills-label">TOOLBOX AND PALETTE</div>
+<section id="skills">
+  <div class="skills-grid">
+    <div class="win">
+      <div class="win-title">
+        <span class="lbl"><span class="box"></span> TOOLBOX.EXE</span>
+        <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+      </div>
+      <div class="win-body">
+        <div class="tool-list">
+          <span class="tool-chip">Python</span>
+          <span class="tool-chip">SQL</span>
+          <span class="tool-chip">PostgreSQL</span>
+          <span class="tool-chip">C++ and OOP</span>
+          <span class="tool-chip">Pandas</span>
+          <span class="tool-chip">NumPy</span>
+          <span class="tool-chip">Tkinter</span>
+          <span class="tool-chip">Flask</span>
+          <span class="tool-chip">Stata</span>
+          <span class="tool-chip">OLS Regression</span>
+          <span class="tool-chip">MS Access</span>
+        </div>
+        <div class="proof-line">Proof: 5+ Python builds · 3 database schemas designed · MediaPipe → Bloomtrace · Flask → Rewaste</div>
+      </div>
+    </div>
+    <div class="win">
+      <div class="win-title">
+        <span class="lbl"><span class="box"></span> PALETTE.EXE</span>
+        <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+      </div>
+      <div class="win-body">
+        <div class="color-chip"><span class="color-dot" style="background:#ff0000"></span>Illustrator</div>
+        <div class="color-chip"><span class="color-dot" style="background:#0066ff"></span>Photoshop</div>
+        <div class="color-chip"><span class="color-dot" style="background:#00cc00"></span>Canva</div>
+        <div class="color-chip"><span class="color-dot" style="background:#ffff00"></span>Brand Identity</div>
+        <div class="color-chip"><span class="color-dot" style="background:#cc00cc"></span>Event Campaigns</div>
+        <div class="color-chip"><span class="color-dot" style="background:#ff8800"></span>Social Content</div>
+        <div class="color-chip"><span class="color-dot" style="background:#00cccc"></span>MediaPipe and OpenCV</div>
+        <div class="color-chip"><span class="color-dot" style="background:#999999"></span>Pygame</div>
+        <div class="proof-line">Proof: design lead for 3 societies · 4+ posters shipped · brand kits end-to-end</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-eyebrow" id="design-label">MY PICTURES</div>
+<section id="design">
+  <div class="win">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> MY PICTURES</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="win-body">
+      <div class="pic-grid">
+        <a class="pic-item" href="assets/touch-some-grass.jpg" target="_blank" rel="noopener">
+          <img src="assets/touch-some-grass.jpg" alt="Touch Some Grass poster design">
+          <span>touch_some_grass.jpg</span>
+        </a>
+        <a class="pic-item" href="assets/outdated.jpg" target="_blank" rel="noopener">
+          <img src="assets/outdated.jpg" alt="Outdated retro computer poster design">
+          <span>outdated.ai</span>
+        </a>
+        <a class="pic-item" href="assets/ghost.jpg" target="_blank" rel="noopener">
+          <img src="assets/ghost.jpg" alt="I dont ghost alien illustration">
+          <span>ghost.ai</span>
+        </a>
+        <a class="pic-item" href="assets/scorp.jpg" target="_blank" rel="noopener">
+          <img src="assets/scorp.jpg" alt="Scorp astro chart design">
+          <span>scorp.psd</span>
+        </a>
+      </div>
+    </div>
+    <div class="status-bar"><span>4 items</span><span>More on Instagram, sog.gypancake</span></div>
+  </div>
+</section>
+
+<div class="section-eyebrow" id="work-label">FILE EXPLORER</div>
+<section id="work">
+  <div class="win">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> MY WORK</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="explorer-head">
+      <span>Name</span><span>Type</span><span>Status</span><span>Year</span>
+    </div>
+
+    <div class="explorer-row">
+      <div class="file-name">📁 Rewaste</div>
+      <div>Flask App</div>
+      <div>Team Project</div>
+      <div>2026</div>
+    </div>
+    <div class="file-desc">Flask platform connecting industrial waste buyers and sellers. Built the auth system and the exchange/contact module linking both sides. <a href="https://github.com/coldbrew-dat/Waste-Management-System" target="_blank" rel="noopener">Open repo</a></div>
+
+    <div class="explorer-row">
+      <div class="file-name">📁 Bloomtrace</div>
+      <div>Pygame and MediaPipe</div>
+      <div>Solo Project</div>
+      <div>2026</div>
+    </div>
+    <div class="file-desc">Hand-tracking piece built with MediaPipe and Pygame. Hand movements grow an animated bouquet in real time. <a href="https://github.com/coldbrew-dat" target="_blank" rel="noopener">Open repo</a></div>
+
+    <div class="explorer-row">
+      <div class="file-name">📁 Pixel Spotify Player</div>
+      <div>Pygame App</div>
+      <div>Solo Project</div>
+      <div>2025</div>
+    </div>
+    <div class="file-desc">Pixelated music player in Pygame with live Spotify API integration — technical plumbing in a playful, low-fi shell. <a href="https://github.com/coldbrew-dat" target="_blank" rel="noopener">Open repo</a></div>
+
+    <div class="explorer-row">
+      <div class="file-name">📁 HR Management System</div>
+      <div>Desktop App</div>
+      <div>Coursework</div>
+      <div>2025</div>
+    </div>
+    <div class="file-desc">Desktop HR system with a normalised PostgreSQL backend, Python/Tkinter GUI, and a CSV attendance module. <a href="https://github.com/coldbrew-dat" target="_blank" rel="noopener">Open repo</a></div>
+
+    <div class="explorer-row">
+      <div class="file-name">📁 Trade Openness and Productivity</div>
+      <div>Research Paper</div>
+      <div>Co Authored</div>
+      <div>2025</div>
+    </div>
+    <div class="file-desc">Cross-sectional study on 25 developed nations using World Bank WDI data. Led OLS regression modelling with robust standard errors. <a href="#contact">Ask for the paper</a></div>
+  </div>
+</section>
+
+<div class="project-modal-overlay" id="projectModalOverlay">
+  <div class="win project-modal">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> <span id="modalTitle">PROJECT.EXE</span></span>
+      <div class="win-buttons"><span class="box" onclick="closeProjectModal()" title="Close">X</span></div>
+    </div>
+    <div class="win-body">
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+    </div>
+    <div class="status-bar"><span>Ready</span><span>Double-click icon to open, X to close</span></div>
+  </div>
+</div>
+
+<div class="section-eyebrow" id="exp-label">C COLON PROMPT</div>
+<section id="experience">
+  <div class="win">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> COMMAND PROMPT</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="terminal">
+      <div class="line"><span class="prompt">C:\HAADIYA&gt;</span> run wfm_internship.exe</div>
+      <div class="desc">Workforce Management Intern, Alkaram Textile Mills, 2026. Audited 25+ dashboards, ran attendance analytics, closed process gaps.</div>
+
+      <div class="line"><span class="prompt">C:\HAADIYA&gt;</span> run decodelabs.exe</div>
+      <div class="desc">Data Analyst Intern, DecodeLabs. EDA and SQL analysis across real-world datasets, delivered a written report and presented dashboard.</div>
+
+      <div class="line"><span class="prompt">C:\HAADIYA&gt;</span> run design_co_head.exe</div>
+      <div class="desc">Design Co-Head, PROCOM / ACM W / FES. Leading design delivery across 3 university societies, keeping branding consistent.</div>
+
+      <div class="line"><span class="prompt">C:\HAADIYA&gt;</span> run rnd_internship.exe</div>
+      <div class="desc">R&D Intern, sustainable waste management. Research that fed directly into building Rewaste.</div>
+
+      <div class="line"><span class="prompt">C:\HAADIYA&gt;</span> <span class="cursor-blink" style="background:#33ff33;"></span></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-eyebrow" id="feedback-label">MEMO.TXT</div>
+<section id="feedback">
+  <div class="win">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> MEMO.TXT</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="win-body">
+      <p style="margin-bottom:16px; font-size:18px;">Found a bug, have a thought, or just want to say hi. Type it below and it gets pinned right here as a sticky note for 24 hours, for anyone visiting to see.</p>
+      <div class="mail-field"><span class="lbl">From</span><input id="feedbackName" type="text" placeholder="Your name (optional)" class="memo-input"></div>
+      <textarea id="feedbackText" class="memo-textarea" rows="5" placeholder="Type your memo here..."></textarea>
+      <div class="mail-actions">
+        <button class="btn" id="sendFeedback">Pin It</button>
+      </div>
+      <div class="corkboard" id="corkboard"></div>
+    </div>
+    <div class="status-bar"><span>Notes clear themselves after 24 hours</span><span>MEMO.TXT</span></div>
+  </div>
+</section>
+
+<div class="section-eyebrow" id="contact-label">NEW MESSAGE</div>
+<section id="contact">
+  <div class="win">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> NEW MESSAGE</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="win-body">
+      <div class="mail-field"><span class="lbl">To</span><span>haadiyafarhan8@gmail.com</span></div>
+      <div class="mail-field"><span class="lbl">Subject</span><span>Let us build something</span></div>
+      <div class="mail-body">Open to internships and collaborations across FinTech, data analytics and design. Based in Karachi, happy to work remotely too.</div>
+      <div class="mail-actions">
+        <a class="btn" href="mailto:haadiyafarhan8@gmail.com">Send</a>
+        <a class="btn" href="https://www.linkedin.com/in/haadiya-farhan-0155a328b/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/coldbrew-dat" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://behance.net/haadiyafarhan" target="_blank" rel="noopener">Behance</a>
+      </div>
+    </div>
+    <div class="status-bar"><span>0 unread</span><span>Karachi, Pakistan, 2026</span></div>
+  </div>
+</section>
+
+<div class="taskbar">
+  <button class="start-btn" onclick="document.getElementById('home').scrollIntoView({behavior:'smooth'})">
+    <span class="start-logo"><span></span><span></span><span></span><span></span></span>
+    Start
+  </button>
+  <div class="taskbar-tabs">
+    <a class="taskbar-tab" href="#about">About</a>
+    <a class="taskbar-tab" href="#skills">Toolbox</a>
+    <a class="taskbar-tab" href="#design">Pictures</a>
+    <a class="taskbar-tab" href="#work">My Work</a>
+    <a class="taskbar-tab" href="#experience">Terminal</a>
+    <a class="taskbar-tab" href="#feedback">Memo</a>
+    <a class="taskbar-tab" href="#contact">Mail</a>
+  </div>
+  <div class="clock" id="clock">00:00</div>
+</div>
+
+<script>
+function updateClock(){
+  const d = new Date();
+  let h = d.getHours();
+  const m = d.getMinutes().toString().padStart(2,'0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12; if(h === 0) h = 12;
+  document.getElementById('clock').textContent = h + ':' + m + ' ' + ampm;
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ---------- boot screen ----------
+(function(){
+  const screen = document.getElementById('bootScreen');
+  const textEl = document.getElementById('bootText');
+  if(!screen || !textEl) return;
+
+  const lines = [
+    'Microsoft Windows 95',
+    '',
+    'Starting...',
+    'Loading Portfolio...',
+    'Loading Projects...',
+    'Loading Personality...',
+    'Done.'
+  ];
+
+  let li = 0;
+  function nextLine(){
+    if(li >= lines.length){
+      setTimeout(function(){
+        screen.classList.add('hide');
+        setTimeout(function(){ screen.remove(); }, 550);
+      }, 350);
+      return;
+    }
+    textEl.textContent += (li > 0 ? '\n' : '') + lines[li];
+    li++;
+    setTimeout(nextLine, li === 1 ? 500 : 260);
+  }
+  nextLine();
+})();
+
+// ---------- draggable windows ----------
+(function(){
+  document.querySelectorAll('.win-title').forEach(function(titleBar){
+    const win = titleBar.closest('.win');
+    if(!win) return;
+    let offsetX = 0, offsetY = 0, curX = 0, curY = 0, dragging = false;
+
+    function onDown(e){
+      if(e.target.closest('.box')) return; // don't drag when clicking the little window buttons
+      dragging = true;
+      win.classList.add('dragging');
+      const point = e.touches ? e.touches[0] : e;
+      offsetX = point.clientX - curX;
+      offsetY = point.clientY - curY;
+      e.preventDefault();
+    }
+    function onMove(e){
+      if(!dragging) return;
+      const point = e.touches ? e.touches[0] : e;
+      curX = point.clientX - offsetX;
+      curY = point.clientY - offsetY;
+      win.style.transform = 'translate(' + curX + 'px,' + curY + 'px)';
+    }
+    function onUp(){
+      dragging = false;
+      win.classList.remove('dragging');
+    }
+
+    titleBar.addEventListener('mousedown', onDown);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    titleBar.addEventListener('touchstart', onDown, {passive:false});
+    document.addEventListener('touchmove', onMove, {passive:false});
+    document.addEventListener('touchend', onUp);
+  });
+})();
+
+// ---------- project modal (clickable Explorer rows) ----------
+(function(){
+  const overlay = document.getElementById('projectModalOverlay');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalMeta = document.getElementById('modalMeta');
+  const modalDesc = document.getElementById('modalDesc');
+  if(!overlay) return;
+
+  window.closeProjectModal = function(){
+    overlay.classList.remove('open');
+  };
+
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) closeProjectModal();
+  });
+
+  document.querySelectorAll('#work .explorer-row').forEach(function(row){
+    row.addEventListener('click', function(){
+      const desc = row.nextElementSibling;
+      if(!desc || !desc.classList.contains('file-desc')) return;
+      const cells = row.querySelectorAll(':scope > div');
+      const name = cells[0] ? cells[0].textContent.trim() : 'PROJECT.EXE';
+      const type = cells[1] ? cells[1].textContent.trim() : '';
+      const status = cells[2] ? cells[2].textContent.trim() : '';
+      const year = cells[3] ? cells[3].textContent.trim() : '';
+
+      modalTitle.textContent = name;
+      modalMeta.innerHTML = '';
+      [type, status, year].forEach(function(v){
+        if(!v) return;
+        const span = document.createElement('span');
+        span.textContent = v;
+        modalMeta.appendChild(span);
+      });
+      modalDesc.innerHTML = desc.innerHTML;
+      overlay.classList.add('open');
+    });
+  });
+})();
+
+(function(){
+  const canvas = document.getElementById('paintCanvas');
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  let drawing = false;
+  let color = '#000000';
+  let mode = 'pencil';
+  let last = null;
+
+  const colors = ['#000000','#ffffff','#ff0000','#ff8800','#ffff00','#00cc00','#00cccc','#0066ff','#cc00cc','#808080'];
+  const palette = document.getElementById('palette');
+  colors.forEach(c=>{
+    const sw = document.createElement('div');
+    sw.className = 'swatch';
+    sw.style.background = c;
+    sw.onclick = ()=>{ color = c; mode = 'pencil';
+      document.getElementById('toolPencil').classList.add('active');
+      document.getElementById('toolEraser').classList.remove('active');
+      document.getElementById('paintStatus').textContent = 'Pencil, ' + c;
+    };
+    palette.appendChild(sw);
+  });
+
+  function pos(e){
+    const rect = canvas.getBoundingClientRect();
+    const cx = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const cy = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+    return {x: cx * canvas.width/rect.width, y: cy * canvas.height/rect.height};
+  }
+  function start(e){ drawing = true; last = pos(e); e.preventDefault(); }
+  function stop(){ drawing = false; last = null; }
+  function move(e){
+    if(!drawing) return;
+    const p = pos(e);
+    ctx.strokeStyle = mode === 'eraser' ? '#ffffff' : color;
+    ctx.lineWidth = mode === 'eraser' ? 16 : 3;
+    ctx.lineCap = 'square';
+    ctx.beginPath();
+    ctx.moveTo(last.x, last.y);
+    ctx.lineTo(p.x, p.y);
+    ctx.stroke();
+    last = p;
+    e.preventDefault();
+  }
+  canvas.addEventListener('mousedown', start);
+  canvas.addEventListener('mouseup', stop);
+  canvas.addEventListener('mouseleave', stop);
+  canvas.addEventListener('mousemove', move);
+  canvas.addEventListener('touchstart', start);
+  canvas.addEventListener('touchend', stop);
+  canvas.addEventListener('touchmove', move);
+
+  document.getElementById('toolPencil').onclick = ()=>{
+    mode = 'pencil';
+    document.getElementById('toolPencil').classList.add('active');
+    document.getElementById('toolEraser').classList.remove('active');
+    document.getElementById('paintStatus').textContent = 'Pencil, ' + color;
+  };
+  document.getElementById('toolEraser').onclick = ()=>{
+    mode = 'eraser';
+    document.getElementById('toolEraser').classList.add('active');
+    document.getElementById('toolPencil').classList.remove('active');
+    document.getElementById('paintStatus').textContent = 'Eraser';
+  };
+  document.getElementById('toolClear').onclick = ()=>{
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+  };
+})();
+
+// ---------- retro click sound ----------
+(function(){
+  let actx;
+  function playClick(){
+    try{
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      if(actx.state === 'suspended') actx.resume();
+      const o = actx.createOscillator();
+      const g = actx.createGain();
+      o.type = 'square';
+      o.frequency.value = 950;
+      g.gain.setValueAtTime(0.09, actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.06);
+      o.connect(g);
+      g.connect(actx.destination);
+      o.start();
+      o.stop(actx.currentTime + 0.07);
+    }catch(e){}
+  }
+  document.addEventListener('click', function(e){
+    const t = e.target.closest('.btn, .desktop-icon, .start-btn, .taskbar-tab, .menubar a, .paint-tools button, .swatch, .win-buttons .box, .pic-item, .tab');
+    if(t) playClick();
+  }, true);
+})();
+
+// ---------- feedback memo + SHARED sticky note board (npoint.io backend) ----------
+(function(){
+  const board = document.getElementById('corkboard');
+  const sendBtn = document.getElementById('sendFeedback');
+  if(!board || !sendBtn) return;
+
+  const DAY_MS = 24 * 60 * 60 * 1000;
+  const COLORS = ['#fff59d', '#f8bbd0', '#a5d6a7', '#90caf9', '#ffcc80', '#ce93d8'];
+  const BIN_URL = 'https://api.npoint.io/6e683537f4293af89f17';
+
+  function renderNotes(notes){
+    const now = Date.now();
+    board.innerHTML = '';
+    notes.forEach(function(n){
+      if(!n.time || now - n.time >= DAY_MS) return;
+      const div = document.createElement('div');
+      div.className = 'sticky-note';
+      div.style.background = n.color || '#fff59d';
+      div.style.transform = 'rotate(' + (n.rot || 0) + 'deg)';
+      const star = document.createElement('span');
+      star.className = 'pin';
+      star.textContent = '\u2605';
+      const body = document.createElement('div');
+      body.textContent = n.text;
+      div.appendChild(star);
+      div.appendChild(body);
+      if(n.name){
+        const who = document.createElement('span');
+        who.className = 'who';
+        who.textContent = '- ' + n.name;
+        div.appendChild(who);
+      }
+      board.appendChild(div);
+    });
+  }
+
+  function fetchNotes(){
+    return fetch(BIN_URL)
+      .then(function(r){ return r.json(); })
+      .then(function(data){ return (data && Array.isArray(data.notes)) ? data.notes : []; })
+      .catch(function(err){ console.error('Could not load corkboard:', err); return []; });
+  }
+
+  function refresh(){
+    fetchNotes().then(renderNotes);
+  }
+
+  refresh();
+  setInterval(refresh, 20 * 1000); // poll so other visitors' notes show up
+
+  sendBtn.addEventListener('click', function(){
+    const nameField = document.getElementById('feedbackName');
+    const textField = document.getElementById('feedbackText');
+    const name = nameField.value.trim();
+    const text = textField.value.trim();
+    if(!text){
+      textField.focus();
+      return;
+    }
+
+    const newNote = {
+      text: text,
+      name: name,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      rot: Math.round((Math.random() * 10) - 5),
+      time: Date.now()
+    };
+
+    fetchNotes().then(function(notes){
+      const now = Date.now();
+      const fresh = notes.filter(function(n){ return n.time && now - n.time < DAY_MS; });
+      fresh.push(newNote);
+      return fetch(BIN_URL, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({notes: fresh})
+      });
+    }).then(function(){
+      refresh();
+    }).catch(function(err){ console.error('Could not save note:', err); });
+
+    textField.value = '';
+    nameField.value = '';
+  });
+})();
+</script>
+
+</body>
+</html>
