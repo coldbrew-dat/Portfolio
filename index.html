@@ -774,7 +774,7 @@ section{padding:20px 5vw 10px;}
       <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
     </div>
     <div class="win-body">
-      <p style="margin-bottom:16px; font-size:18px;">Found a bug, have a thought, or just want to say hi. Type it below, it gets pinned right here as a sticky note for 24 hours, and lands in my inbox too.</p>
+      <p style="margin-bottom:16px; font-size:18px;">Found a bug, have a thought, or just want to say hi. Type it below and it gets pinned right here as a sticky note for 24 hours, for anyone visiting to see.</p>
       <div class="mail-field"><span class="lbl">From</span><input id="feedbackName" type="text" placeholder="Your name (optional)" class="memo-input"></div>
       <textarea id="feedbackText" class="memo-textarea" rows="5" placeholder="Type your memo here..."></textarea>
       <div class="mail-actions">
@@ -1013,10 +1013,6 @@ setInterval(updateClock, 1000*30);
     }).then(function(){
       refresh();
     }).catch(function(err){ console.error('Could not save note:', err); });
-
-    const subject = encodeURIComponent('Portfolio Memo' + (name ? ' from ' + name : ''));
-    const body = encodeURIComponent(text + (name ? '\n\nFrom: ' + name : ''));
-    window.location.href = 'mailto:haadiyafarhan8@gmail.com?subject=' + subject + '&body=' + body;
 
     textField.value = '';
     nameField.value = '';
