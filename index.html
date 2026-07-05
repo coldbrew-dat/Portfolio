@@ -372,6 +372,22 @@ section{padding:20px 5vw 10px;}
 /* contact / mail composer */
 .mail-field{display:flex;border-bottom:1px solid var(--grey-dark);padding:6px 0;font-size:17px;}
 .mail-field .lbl{width:90px;font-weight:bold;color:var(--navy);}
+.memo-input{
+  font-family:var(--mono);font-size:17px;
+  border:none;background:var(--white);
+  box-shadow:inset 1px 1px 0 var(--grey-dark);
+  padding:4px 8px;flex:1;
+}
+.memo-textarea{
+  width:100%;
+  font-family:var(--mono);font-size:17px;
+  background:var(--white);
+  border:none;
+  box-shadow:inset 1px 1px 0 var(--grey-dark);
+  padding:12px;
+  margin-top:12px;
+  resize:vertical;
+}
 .mail-body{margin-top:14px;font-size:17px;line-height:1.6;background:var(--white);padding:14px;box-shadow:inset 1px 1px 0 var(--grey-dark);min-height:100px;}
 .mail-actions{margin-top:18px;display:flex;gap:10px;}
 
@@ -467,6 +483,10 @@ section{padding:20px 5vw 10px;}
   <div class="desktop-icon" onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})" style="top:64%; left:82%;">
     <svg class="icon" viewBox="0 0 44 38"><rect width="44" height="38" fill="#000"/><text x="4" y="24" fill="#33ff33" font-size="14" font-family="monospace">C:\&gt;</text></svg>
     <span>Terminal</span>
+  </div>
+  <div class="desktop-icon" onclick="document.getElementById('feedback').scrollIntoView({behavior:'smooth'})" style="top:64%; left:8%;">
+    <svg class="icon" viewBox="0 0 44 38"><rect x="4" width="36" height="36" fill="#fff9c4" stroke="#000" stroke-width="2"/><line x1="10" y1="12" x2="34" y2="12" stroke="#999" stroke-width="1.5"/><line x1="10" y1="18" x2="34" y2="18" stroke="#999" stroke-width="1.5"/><line x1="10" y1="24" x2="26" y2="24" stroke="#999" stroke-width="1.5"/></svg>
+    <span>Leave a Memo</span>
   </div>
   <div class="desktop-icon" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" style="top:80%; left:8%;">
     <svg class="icon" viewBox="0 0 44 38"><rect width="44" height="32" y="3" fill="#fff" stroke="#000" stroke-width="2"/><polygon points="2,4 22,20 42,4" fill="none" stroke="#000" stroke-width="2"/></svg>
@@ -694,6 +714,25 @@ section{padding:20px 5vw 10px;}
   </div>
 </section>
 
+<div class="section-eyebrow" id="feedback-label">MEMO.TXT</div>
+<section id="feedback">
+  <div class="win">
+    <div class="win-title">
+      <span class="lbl"><span class="box"></span> MEMO.TXT</span>
+      <div class="win-buttons"><span class="box"></span><span class="box"></span><span class="box"></span></div>
+    </div>
+    <div class="win-body">
+      <p style="margin-bottom:16px; font-size:18px;">Found a bug, have a thought, or just want to say hi. Type it below, it opens straight in your mail app addressed to me.</p>
+      <div class="mail-field"><span class="lbl">From</span><input id="feedbackName" type="text" placeholder="Your name (optional)" class="memo-input"></div>
+      <textarea id="feedbackText" class="memo-textarea" rows="5" placeholder="Type your memo here..."></textarea>
+      <div class="mail-actions">
+        <button class="btn" id="sendFeedback">Save and Send</button>
+      </div>
+    </div>
+    <div class="status-bar"><span>Unsaved changes</span><span>MEMO.TXT</span></div>
+  </div>
+</section>
+
 <div class="section-eyebrow" id="contact-label">NEW MESSAGE</div>
 <section id="contact">
   <div class="win">
@@ -727,6 +766,7 @@ section{padding:20px 5vw 10px;}
     <a class="taskbar-tab" href="#design">Pictures</a>
     <a class="taskbar-tab" href="#work">My Work</a>
     <a class="taskbar-tab" href="#experience">Terminal</a>
+    <a class="taskbar-tab" href="#feedback">Memo</a>
     <a class="taskbar-tab" href="#contact">Mail</a>
   </div>
   <div class="clock" id="clock">00:00</div>
@@ -813,6 +853,48 @@ setInterval(updateClock, 1000*30);
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0,0,canvas.width,canvas.height);
   };
+})();
+
+// ---------- retro click sound ----------
+(function(){
+  let actx;
+  function playClick(){
+    try{
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      if(actx.state === 'suspended') actx.resume();
+      const o = actx.createOscillator();
+      const g = actx.createGain();
+      o.type = 'square';
+      o.frequency.value = 950;
+      g.gain.setValueAtTime(0.09, actx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, actx.currentTime + 0.06);
+      o.connect(g);
+      g.connect(actx.destination);
+      o.start();
+      o.stop(actx.currentTime + 0.07);
+    }catch(e){}
+  }
+  document.addEventListener('click', function(e){
+    const t = e.target.closest('.btn, .desktop-icon, .start-btn, .taskbar-tab, .menubar a, .paint-tools button, .swatch, .win-buttons .box, .pic-item, .tab');
+    if(t) playClick();
+  }, true);
+})();
+
+// ---------- feedback memo ----------
+(function(){
+  const sendBtn = document.getElementById('sendFeedback');
+  if(!sendBtn) return;
+  sendBtn.addEventListener('click', function(){
+    const name = document.getElementById('feedbackName').value.trim();
+    const text = document.getElementById('feedbackText').value.trim();
+    if(!text){
+      document.getElementById('feedbackText').focus();
+      return;
+    }
+    const subject = encodeURIComponent('Portfolio Memo' + (name ? ' from ' + name : ''));
+    const body = encodeURIComponent(text + (name ? '\n\nFrom: ' + name : ''));
+    window.location.href = 'mailto:haadiyafarhan8@gmail.com?subject=' + subject + '&body=' + body;
+  });
 })();
 </script>
 
