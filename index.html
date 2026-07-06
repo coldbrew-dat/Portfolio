@@ -405,10 +405,16 @@ section{padding:20px 5vw 10px;}
     inset -2px -2px 0 var(--grey-dark),
     inset 2px 2px 0 var(--grey-light);
   display:flex;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
   gap:22px;
-  align-content:flex-start;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x proximity;
+  -webkit-overflow-scrolling:touch;
 }
+.corkboard::-webkit-scrollbar{height:10px;}
+.corkboard::-webkit-scrollbar-track{background:#8a5f3c;}
+.corkboard::-webkit-scrollbar-thumb{background:var(--grey-light);border:1px solid #000;}
 .corkboard:empty::after{
   content:'Nothing pinned yet. Be the first.';
   color:rgba(255,255,255,0.75);
@@ -418,6 +424,8 @@ section{padding:20px 5vw 10px;}
 .sticky-note{
   width:160px;
   min-height:140px;
+  flex:0 0 auto;
+  scroll-snap-align:start;
   padding:18px 12px 12px;
   font-family:var(--mono);
   font-size:15px;
@@ -586,6 +594,22 @@ section{padding:20px 5vw 10px;}
   padding:3px 10px;
   box-shadow:inset 1px 1px 0 var(--grey-dark);
 }
+.modal-meta span.status-inprocess{
+  background:#ffe082;
+  color:#5c4400;
+  font-weight:bold;
+}
+
+/* desktop decorations */
+.desktop-decor{
+  position:absolute;
+  pointer-events:none;
+  opacity:0.9;
+  image-rendering:pixelated;
+}
+@media (max-width:760px){
+  .desktop-decor{display:none;}
+}
 
 </style>
 </head>
@@ -629,6 +653,32 @@ section{padding:20px 5vw 10px;}
     <span>Send Mail</span>
   </div>
 
+  <!-- decorative pixel art scattered around the desktop -->
+  <svg class="desktop-decor" viewBox="0 0 16 16" style="top:4%; left:42%; width:28px; height:28px;">
+    <path d="M8 0 L9 6 L16 8 L9 10 L8 16 L7 10 L0 8 L7 6 Z" fill="#ffff00" stroke="#000" stroke-width="0.5"/>
+  </svg>
+  <svg class="desktop-decor" viewBox="0 0 16 16" style="top:14%; left:94%; width:34px; height:34px;">
+    <circle cx="8" cy="8" r="7" fill="#c0c0c0" stroke="#000"/>
+    <circle cx="8" cy="8" r="5" fill="#8888ff"/>
+    <circle cx="8" cy="8" r="2" fill="#fff" stroke="#000"/>
+  </svg>
+  <svg class="desktop-decor" viewBox="0 0 16 16" style="top:36%; left:2%; width:22px; height:22px;">
+    <path d="M8 0 L9.5 5.5 L16 8 L9.5 10.5 L8 16 L6.5 10.5 L0 8 L6.5 5.5 Z" fill="#ff66cc" stroke="#000" stroke-width="0.5"/>
+  </svg>
+  <svg class="desktop-decor" viewBox="0 0 24 16" style="top:56%; left:93%; width:44px; height:30px;">
+    <polygon points="0,2 11,8 0,14" fill="#ff0000" stroke="#000" stroke-width="0.6"/>
+    <polygon points="24,2 13,8 24,14" fill="#ff0000" stroke="#000" stroke-width="0.6"/>
+    <rect x="10" y="6" width="4" height="4" fill="#ffcc00" stroke="#000" stroke-width="0.6"/>
+  </svg>
+  <svg class="desktop-decor" viewBox="0 0 16 16" style="top:90%; left:44%; width:20px; height:20px;">
+    <path d="M8 0 L9.5 5.5 L16 8 L9.5 10.5 L8 16 L6.5 10.5 L0 8 L6.5 5.5 Z" fill="#00ffff" stroke="#000" stroke-width="0.5"/>
+  </svg>
+  <svg class="desktop-decor" viewBox="0 0 16 16" style="top:76%; left:94%; width:30px; height:30px;">
+    <circle cx="8" cy="8" r="7" fill="#c0c0c0" stroke="#000"/>
+    <circle cx="8" cy="8" r="5" fill="#66cc99"/>
+    <circle cx="8" cy="8" r="2" fill="#fff" stroke="#000"/>
+  </svg>
+
   <div class="win hero-notepad">
     <div class="win-title">
       <span class="lbl"><span class="box"></span> HAADIYA.TXT</span>
@@ -636,7 +686,7 @@ section{padding:20px 5vw 10px;}
     </div>
     <div class="win-body">
       <h1 class="name">HAADIYA FARHAN<span class="cursor-blink"></span></h1>
-      <p class="tagline">FinTech student building data-driven software, computer-vision experiments, and pixel-perfect visuals.</p>
+      <p class="tagline">FinTech undergrad writing Python, SQL, and OOP by trade — building data pipelines, computer-vision tools, and dashboards, with a design instinct on the side.</p>
       <div class="hero-cta">
         <a class="btn" href="#work">Open My Work</a>
         <a class="btn" href="resume.pdf" download>Download Resume</a>
@@ -691,6 +741,7 @@ section{padding:20px 5vw 10px;}
         <button id="toolPencil" class="active" title="Pencil">P</button>
         <button id="toolEraser" title="Eraser">E</button>
         <button id="toolClear" title="Clear">X</button>
+        <button id="toolSave" title="Save as PNG">S</button>
       </div>
       <canvas id="paintCanvas" width="480" height="260"></canvas>
     </div>
@@ -771,7 +822,7 @@ section{padding:20px 5vw 10px;}
         </a>
       </div>
     </div>
-    <div class="status-bar"><span>4 items</span><span>More on Instagram, sog.gypancake</span></div>
+    <div class="status-bar"><span>4 items</span><span>More on Instagram, <a href="https://www.instagram.com/sog.gypancake/" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">sog.gypancake</a></span></div>
   </div>
 </section>
 
@@ -786,7 +837,7 @@ section{padding:20px 5vw 10px;}
       <span>Name</span><span>Type</span><span>Status</span><span>Year</span>
     </div>
 
-    <div class="explorer-row">
+    <div class="explorer-row" data-status="in-process">
       <div class="file-name">📁 Rewaste</div>
       <div>Flask App</div>
       <div>Team Project</div>
@@ -900,9 +951,11 @@ section{padding:20px 5vw 10px;}
       <div class="mail-body">Open to internships and collaborations across FinTech, data analytics and design. Based in Karachi, happy to work remotely too.</div>
       <div class="mail-actions">
         <a class="btn" href="mailto:haadiyafarhan8@gmail.com">Send</a>
+        <a class="btn" href="resume.pdf" download>Download Resume</a>
         <a class="btn" href="https://www.linkedin.com/in/haadiya-farhan-0155a328b/" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://github.com/coldbrew-dat" target="_blank" rel="noopener">GitHub</a>
         <a class="btn" href="https://behance.net/haadiyafarhan" target="_blank" rel="noopener">Behance</a>
+        <a class="btn" href="https://www.instagram.com/sog.gypancake/" target="_blank" rel="noopener">Instagram</a>
       </div>
     </div>
     <div class="status-bar"><span>0 unread</span><span>Karachi, Pakistan, 2026</span></div>
@@ -955,8 +1008,29 @@ setInterval(updateClock, 1000);
   ];
 
   let li = 0;
+  function playStartupChime(){
+    try{
+      const actx = new (window.AudioContext || window.webkitAudioContext)();
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5 E5 G5 C6 — simple ascending chime
+      notes.forEach(function(freq, i){
+        const start = actx.currentTime + i * 0.16;
+        const o = actx.createOscillator();
+        const g = actx.createGain();
+        o.type = 'triangle';
+        o.frequency.value = freq;
+        g.gain.setValueAtTime(0.0001, start);
+        g.gain.exponentialRampToValueAtTime(0.12, start + 0.03);
+        g.gain.exponentialRampToValueAtTime(0.0001, start + 0.5);
+        o.connect(g);
+        g.connect(actx.destination);
+        o.start(start);
+        o.stop(start + 0.55);
+      });
+    }catch(e){}
+  }
   function nextLine(){
     if(li >= lines.length){
+      playStartupChime();
       setTimeout(function(){
         screen.classList.add('hide');
         setTimeout(function(){ screen.remove(); }, 550);
@@ -1041,6 +1115,10 @@ setInterval(updateClock, 1000);
         span.textContent = v;
         modalMeta.appendChild(span);
       });
+      const inProcess = document.createElement('span');
+      inProcess.className = 'status-inprocess';
+      inProcess.textContent = '🚧 In Process';
+      modalMeta.appendChild(inProcess);
       modalDesc.innerHTML = desc.innerHTML;
       overlay.classList.add('open');
     });
@@ -1115,6 +1193,12 @@ setInterval(updateClock, 1000);
   document.getElementById('toolClear').onclick = ()=>{
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0,0,canvas.width,canvas.height);
+  };
+  document.getElementById('toolSave').onclick = ()=>{
+    const link = document.createElement('a');
+    link.download = 'haadiya-paint-' + Date.now() + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
   };
 })();
 
